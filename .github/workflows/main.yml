@@ -1,0 +1,25 @@
+name: CI
+
+on: [push]
+
+jobs:
+  build:
+
+    runs-on: ubuntu-18.04
+    steps:
+    - uses: actions/checkout@v2
+    - name: Make
+      run: |
+        sudo apt-get update && sudo apt-get install -y --no-install-recommends qemu-user-static binfmt-support
+        sudo update-binfmts --enable qemu-arm
+        sudo update-binfmts --display qemu-arm
+        cp /usr/bin/qemu-arm-static image
+        cd image
+        sudo make base && sudo make server
+    - name: Publish to Registry
+      run: |
+        docker login docker.pkg.github.com -u ${{secrets.GITHUB_USERNAME}} -p ${{secrets.GITHUB_PERSONAL_TOKEN}}
+        docker push docker.pkg.github.com/aashish108/seafile-docker-pi/seafile:6.3.4-pi
+
+
+
