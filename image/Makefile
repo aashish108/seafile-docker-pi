@@ -17,6 +17,7 @@ base:
 server:
   cd seafile && cp -rf ../../scripts ./ && docker build -t $(server_image) .
 
-push: push-base push-server
+push: 
+	push-base push-server
 
 .PHONY: base server push push-base push-server
