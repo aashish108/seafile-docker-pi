@@ -6,16 +6,16 @@ server_image=docker.pkg.github.com/aashish108/seafile-docker-pi/seafile:$(server
 server_image_squashed=seafileltd/seafile:$(server_version)-pi-squashed
 
 all:
-  @echo
-  @echo Please use '"make base"' or '"make server"' or '"make push"'.
-  @echo
+	@echo
+	@echo Please use '"make base"' or '"make server"' or '"make push"'.
+	@echo
 
 base:
-  docker pull abrodkin/baseimage:0.11
-  cd base && docker build -t $(base_image) .
+	docker pull abrodkin/baseimage:0.11
+	cd base && docker build -t $(base_image) .
 
 server:
-  cd seafile && cp -rf ../../scripts ./ && docker build -t $(server_image) .
+	cd seafile && cp -rf ../../scripts ./ && docker build -t $(server_image) .
 
 push: 
 	push-base push-server
